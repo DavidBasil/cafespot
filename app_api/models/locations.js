@@ -52,3 +52,5 @@ var locationSchema = new mongoose.Schema({
 	openingTimes: [openingTimeSchema],
 	reviews: [reviewSchema]
 })
+
+mongoose.model('Location', locationSchema)
