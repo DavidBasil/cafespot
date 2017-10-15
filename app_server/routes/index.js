@@ -1,8 +1,10 @@
 var express = require('express')
 var router = express.Router()
-var ctrlMain = require('../controllers/main')
+var ctrlLocations = require('../controllers/locations')
 
-// home route
-router.get('/', ctrlMain.index)
+// locations routes
+router.get('/', ctrlLocations.locationsList)
+router.get('/location', ctrlLocations.location)
+router.get('/location/review/new', ctrlLocations.addReview)
 
 module.exports = router
