@@ -1,7 +1,7 @@
 var express = require('express')
 var router = express.Router()
 var ctrlLocations = require('../controllers/locations')
-// var ctrlReviews = require('../controllers/reviews')
+var ctrlReviews = require('../controllers/reviews')
 
 // LOCATIONS
 // get a list of locations
@@ -17,7 +17,7 @@ router.get('/locations/:locationid', ctrlLocations.locationsReadOne)
 
 // REVIEWS
 // get a single review
-// router.get('/locations/:locationid/reviews/:reviewid', ctrlReviews.reviewsReadOne)
+router.get('/locations/:locationid/reviews/:reviewid', ctrlReviews.reviewsReadOne)
 // // create a new review
 // router.get('/locations/:locationid/reviews/', ctrlReviews.reviewsCreateOne)
 // // update a review
