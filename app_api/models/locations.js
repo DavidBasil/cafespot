@@ -21,13 +21,12 @@ var reviewSchema = new mongoose.Schema({
 		type: Number,
 		required: true,
 		min: 1,
-		max: 5,
-		"default": 1
+		max: 5
 	},
 	reviewText: String,
 	createdOn: {
 		type: Date,
-		default: Date.now
+		"default": Date.now
 	}
 })
 
