@@ -10,8 +10,8 @@ var ctrlReviews = require('../controllers/reviews')
 router.get('/locations/:locationid', ctrlLocations.locationsReadOne)
 // // create a new location
 router.post('/locations', ctrlLocations.locationsCreateOne)
-// // update a location
-// router.put('/locations/:locationid', ctrlLocations.locationsUpdateOne)
+// update a location
+router.put('/locations/:locationid', ctrlLocations.locationsUpdateOne)
 // // delete a location
 // router.delete('/locations/:locationid', ctrlLocations.locationsDeleteOne)
 
@@ -20,8 +20,8 @@ router.post('/locations', ctrlLocations.locationsCreateOne)
 router.get('/locations/:locationid/reviews/:reviewid', ctrlReviews.reviewsReadOne)
 // // create a new review
 router.post('/locations/:locationid/reviews/', ctrlReviews.reviewsCreateOne)
-// // update a review
-// router.put('/locations/:locationid/reviews/:reviewid', ctrlReviews.reviewsUpdateOne)
+ // update a review
+router.put('/locations/:locationid/reviews/:reviewid', ctrlReviews.reviewsUpdateOne)
 // // delete a review
 // router.delete('/locations/:locationid/reviews/:reviewid', ctrlReviews.reviewsDeleteOne)
 

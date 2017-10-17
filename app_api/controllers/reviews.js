@@ -113,3 +113,48 @@ var doSetAverageRating = function(location){
 		})
 	}
 }
+
+// update a review
+module.exports.reviewsUpdateOne = function(req, res){
+	if (!req.params.locationid || !req.params.reviewid){
+		res.status(404)
+		res.json({"message": "Not found, locationid and reviewid are both required"})
+		return
+	}
+	Location.findById(req.params.locationid).select('reviews').exec(function(err, location){
+		var thisReview
+		if (!location){
+			res.status(404)
+			res.json({"message": "locationid not found"})
+			return
+		} else if (err){
+			res.status(400)
+			res.json(err)
+			return
+		}
+		if (location.reviews && location.reviews.length > 0){
+			thisReview = location.reviews.id(req.params.reviewid)
+			if (!thisReview){
+				res.status(404)
+				res.json({"message": "reviewid not found"})
+			} else {
+				thisReview.author = req.body.author
+				thisReview.rating = req.body.rating
+				thisReview.reviewText = req.body.reviewText
+				location.save(function(err, location){
+					if (err){
+						res.status(404)
+						res.json(err)
+					} else {
+						updateAverageRating(location._id)
+						res.status(200)
+						res.json(thisReview)
+					}
+				})
+			}
+		} else {
+			res.status(404)
+			res.json({"message": "no review to update"})
+		}
+	})
+}
