@@ -158,3 +158,44 @@ module.exports.reviewsUpdateOne = function(req, res){
 		}
 	})
 }
+
+// delete a review
+module.exports.reviewsDeleteOne = function(req, res){
+	if (!req.params.locationid || !req.params.reviewid){
+		res.status(404)
+		res.json({"message": "Not found, locationid and reviewid are both required"})
+		return
+	}
+	Location.findById(req.params.locationid).select('reviews').exec(function(err, location){
+		if (!location){
+			res.status(404)
+			res.json({"message": "locationid not found"})
+			return
+		} else  if (err){
+			res.status(400)
+			res.json(err)
+			return
+		}
+		if (location.reviews && location.reviews.length > 0){
+			if (!location.reviews.id(req.params.reviewid)){
+				res.status(404)
+				res.json({"message": "reviewid not found"})
+			} else {
+				location.reviews.id(req.params.reviewid).remove()
+				location.save(function(err){
+					if (err){
+						res.status(404)
+						res.json(err)
+					} else {
+						updateAverageRating(location._id)
+						res.status(204)
+						res.json(null)
+					}
+				})
+			}
+		} else {
+			res.status(404)
+			res.json({"message": "no review to delete"})
+		}
+	})
+}

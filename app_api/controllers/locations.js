@@ -93,3 +93,22 @@ module.exports.locationsUpdateOne = function(req, res){
 		})
 	})
 }
+
+// delete a location
+module.exports.locationsDeleteOne = function(req, res){
+	var locationid = req.params.locationid
+	if (locationid){
+		Location.findByIdAndRemove(locationid).exec(function(err, location){
+			if (err){
+				res.status(404)
+				res.json(err)
+				return
+			}
+			res.status(204)
+			res.json(null)
+		})
+	} else {
+		res.status(404)
+		res.json({"message": "no locationid"})
+	}
+}
