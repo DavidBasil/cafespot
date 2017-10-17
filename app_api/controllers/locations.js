@@ -1,6 +1,21 @@
 var mongoose = require('mongoose')
 var Location = mongoose.model('Location')
 
+// get all locations
+module.exports.locationsList = function(req, res){
+	Location.find().exec(function(err, locations){
+		if (!locations){
+			res.status(200)
+			res.json({"message": "there are no locations"})
+		} else  if (err){
+			res.status(404)
+			res.json(err)
+		}
+		res.status(200)
+		res.json(locations)
+	})
+}
+
 // get a single location
 module.exports.locationsReadOne = function(req, res){
 	if (req.params && req.params.locationid){

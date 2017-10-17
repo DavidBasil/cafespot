@@ -5,7 +5,7 @@ var ctrlReviews = require('../controllers/reviews')
 
 // LOCATIONS
 // get a list of locations
-// router.get('/locations', ctrlLocations.locationsList)
+router.get('/locations', ctrlLocations.locationsList)
 // get a single location
 router.get('/locations/:locationid', ctrlLocations.locationsReadOne)
 // // create a new location
