@@ -1,18 +1,21 @@
 <% include ./partials/head %>
 
 <div class="uk-container uk-margin-top">
+	<% if (error == 'val'){ %>
+	<span class="uk-alert uk-alert-danger">All field required, please try again.</span>
+	<% } %>
 	<h2><%= title %></h2>
 	<div class="uk-width-1-3">
 		
-	<form class="uk-form" action="" method="post"> <!-- will make a POST request to the current page -->
+	<form class="uk-form" action="" method="post" id="addReview"> <!-- will make a POST request to the current page -->
 		<div class="uk-form-row">
-			<input type="text" placeholder="Name" name="author" />
+			<input type="text" placeholder="Name" name="author" id="author"/>
 		</div>		
 		<div class="uk-form-row">
-			<input type="number" min="1" max="5" class="uk-form-width-small" placeholder="Rating" name="rating"/>
+			<input type="number" min="1" max="5" class="uk-form-width-small" placeholder="Rating" name="rating" id="rating"/>
 		</div>
 		<div class="uk-form-row">
-			<textarea id="" rows="8" cols="46" placeholder="Review" name="reviewText"></textarea>
+			<textarea id="reviewText" rows="8" cols="46" placeholder="Review" name="reviewText"></textarea>
 		</div>
 		<button type="submit" class="uk-button uk-button-success uk-align-center uk-margin-top">Add review</button>
 	</form>
