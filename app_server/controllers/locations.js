@@ -24,7 +24,6 @@ var renderHomepage = function(req, res, responseBody){
 		message: message
 	})
 }
-
 // home page controller
 module.exports.homelist = function(req, res){
 	var requestOptions, path
@@ -32,17 +31,32 @@ module.exports.homelist = function(req, res){
 	requestOptions = {
 		url: apiOptions.server + path,
 		method: 'GET',
-		json: {},
-		qs: {}
+		json: {}
 	}
 	request(requestOptions, function(err, response, body){
 		renderHomepage(req, res, body)
 	})
 }
 
-// single location
+// single location rendering
+var renderDetailPage = function(req, res, location){
+	res.render('location-info', {
+		title: location.title,
+		location: location
+	})
+}
+// single location controller
 module.exports.locationInfo = function(req, res){
-	res.render('location-info', { title: 'Starcups' })
+	var requestOptions, path
+	path = '/api/locations/' + req.params.locationid
+	requestOptions = {
+		url: apiOptions.server + path,
+		method: 'GET',
+		json: {}
+	}
+	request(requestOptions, function(err, response, body){
+		renderDetailPage(req, res, body)
+	})
 }
 
 // add review page
