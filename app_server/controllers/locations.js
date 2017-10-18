@@ -3,6 +3,26 @@ var apiOptions = {
 	server: "http://localhost:3000"
 }
 
+// get location info
+var getLocationInfo = function(req, res, callback){
+	var requestOptions, path
+	path = "/api/locations/" + req.params.locationid
+	requestOptions = {
+		url: apiOptions.server + path,
+		method: 'GET',
+		json: {}
+	}
+	request(requestOptions, function(err, response, body){
+		if (response.statusCode === 200){
+			callback(req, res, body)
+		} else {
+			_showError(req, res, response.statusCode)
+		}
+	})
+}
+
+
+// todo: review error functionality
 // show errors
 var _showError = function(req, res, status){
 	var title, content
@@ -64,24 +84,46 @@ var renderDetailPage = function(req, res, location){
 }
 // single location controller
 module.exports.locationInfo = function(req, res){
-	var requestOptions, path
-	path = '/api/locations/' + req.params.locationid
-	requestOptions = {
-		url: apiOptions.server + path,
-		method: 'GET',
-		json: {}
-	}
-	request(requestOptions, function(err, response, body){
-		if (response.status === 200){
-			renderDetailPage(req, res, body)
-		} else {
-			 _showError(req, res, response.statusCode)
-		}
+	getLocationInfo(req, res, function(req, res, responseData){
+		renderDetailPage(req, res, responseData)
 	})
 }
 
-// add review page
-module.exports.addReview = function(req, res){
-	res.render('review', { title: 'Add review' })
+// review form rendering
+var renderReviewForm = function(req, res, location){
+	res.render('location-review-form', {
+		title: 'Review ' + location.title + ' on Cafespot',
+		pageHeader: {title: 'Review ' + location.title}
+	})
 }
 
+// get add review page
+module.exports.addReview = function(req, res){
+	getLocationInfo(req, res, function(req, res, responseData){
+		renderReviewForm(req, res, responseData)
+	})
+}
+
+// do add review page
+module.exports.doAddReview = function(req, res){
+	var requestOptions, path, locationid, postdata
+	locationid = req.params.locationid
+	path = '/api/locations/' + locationid + '/reviews/'
+	postdata = {
+		author: req.body.author,
+		rating: parseInt(req.body.rating, 10),
+		reviewText: req.body.reviewText
+	}
+	requestOptions = {
+		url: apiOptions.server + path,
+		method: 'POST',
+		json: postdata
+	}
+	request(requestOptions, function(err, response, body){
+		if (response.statusCode === 201){
+			res.redirect('/location/' + locationid)
+		} else {
+			_showError(req, res, response.statusCode)
+		}
+	})
+}

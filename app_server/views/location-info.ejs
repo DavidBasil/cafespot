@@ -7,9 +7,15 @@
 <p> <%= location.rating %></p>
 <ul class="uk-list">
 	<% location.reviews.forEach(function(review){ %>
-		<li><%= review.reviewText %></li>
-		<span><%= review.createdOn %></span>
+	<hr />
+		<li>
+			<span><%= review.author %></span>
+			<p><%= review.reviewText %></p>
+		</li>
+		<span><%= review.createdOn %></span> <br />
+		<hr />
 	<% }) %>
+	<a class="uk-button uk-button-success" href="/location/<%= location._id %>/reviews/new">Add review</a>
 </ul>
 
 </div> <!-- /uk-container -->
