@@ -3,6 +3,23 @@ var apiOptions = {
 	server: "http://localhost:3000"
 }
 
+// show errors
+var _showError = function(req, res, status){
+	var title, content
+	if (status === 400){
+		title = '404, page not found'			
+		content = 'Sorry. We can\'t find the page you\'re looking for.'
+	} else {
+		title = status + ', something went wrong'
+		content = 'Somethig, somewhere, has gone just a little bit wrong.'
+	}
+	res.status(status)
+	res.render('error-text', {
+		title: title,
+		content: content
+	})
+}
+
 // home page rendering
 var renderHomepage = function(req, res, responseBody){
 	var message
@@ -55,7 +72,11 @@ module.exports.locationInfo = function(req, res){
 		json: {}
 	}
 	request(requestOptions, function(err, response, body){
-		renderDetailPage(req, res, body)
+		if (response.status === 200){
+			renderDetailPage(req, res, body)
+		} else {
+			 _showError(req, res, response.statusCode)
+		}
 	})
 }
 

@@ -1,9 +1,16 @@
 <% include ./partials/head %>
+<!-- todo: add all location details and format timestamp -->
 <div class="uk-container uk-margin-left">
 
 <h2><%= title %></h2>
 <p> <%= location.address %></p>
 <p> <%= location.rating %></p>
+<ul class="uk-list">
+	<% location.reviews.forEach(function(review){ %>
+		<li><%= review.reviewText %></li>
+		<span><%= review.createdOn %></span>
+	<% }) %>
+</ul>
 
 </div> <!-- /uk-container -->
 <% include ./partials/footer %>
