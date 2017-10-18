@@ -1,0 +1,18 @@
+<% include ./partials/head %>
+<div class="uk-container uk-container-center">
+	<h2><%= title %></h2>
+	<% if (message){ %>
+		<h6 class="uk-alert uk-alert-danger"><%= message %></h6>
+	<% } %>
+	<ul class="uk-list">
+		<% locations.forEach(function(location){ %>
+		<li>
+			<h3>
+				<a href="/location/<%= location._id %>"><%= location.title %></a>
+			</h3>
+			<h5><%= location.address %></h5>
+		</li> <hr />
+		<% }) %>
+	</ul>
+</div> <!-- /uk-container -->
+<% include ./partials/footer %>
