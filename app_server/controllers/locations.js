@@ -3,25 +3,6 @@ var apiOptions = {
 	server: "http://localhost:3000"
 }
 
-// get location info
-var getLocationInfo = function(req, res, callback){
-	var requestOptions, path
-	path = "/api/locations/" + req.params.locationid
-	requestOptions = {
-		url: apiOptions.server + path,
-		method: 'GET',
-		json: {}
-	}
-	request(requestOptions, function(err, response, body){
-		if (response.statusCode === 200){
-			callback(req, res, body)
-		} else {
-			_showError(req, res, response.statusCode)
-		}
-	})
-}
-
-
 // todo: review error functionality
 // show errors
 var _showError = function(req, res, status){
@@ -42,36 +23,34 @@ var _showError = function(req, res, status){
 
 // home page rendering
 var renderHomepage = function(req, res, responseBody){
-	var message
-	if (!(responseBody instanceof Array)){
-		message = "API lookup error"
-		responseBody = []
-	} else {
-		if (!responseBody.length){
-			message = "No places found nearby"
-		}
-	}
 	res.render('locations-list', {
 		title: 'Cafespot - review your favorite cafe.',
 		pageHeader: {
 			title: 'Cafespot',
 			strapline: 'Review your favorite cafe in your town'
-		},
-		locations: responseBody,
-		message: message
+		}
 	})
 }
 // home page controller
 module.exports.homelist = function(req, res){
+	renderHomepage(req, res)
+}
+
+// get location info
+var getLocationInfo = function(req, res, callback){
 	var requestOptions, path
-	path = '/api/locations'
+	path = "/api/locations/" + req.params.locationid
 	requestOptions = {
 		url: apiOptions.server + path,
 		method: 'GET',
 		json: {}
 	}
 	request(requestOptions, function(err, response, body){
-		renderHomepage(req, res, body)
+		if (response.statusCode === 200){
+			callback(req, res, body)
+		} else {
+			_showError(req, res, response.statusCode)
+		}
 	})
 }
 
