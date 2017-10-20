@@ -2,12 +2,16 @@
 <!-- todo: add all details -->
 <div class="uk-container uk-container-center" ng-controller="locationListCtrl">
 	<h2><%= title %></h2>
+	<input type="text" ng-model="textFilter" name="filter"/>
+	<div class="error">
+		{{ message }}	
+	</div>
 	<ul class="uk-list">
-		<li ng-repeat="location in data.locations">
+		<li ng-repeat="location in data.locations | filter: textFilter">
 			<hr />
 			<h3>{{ location.title }}</h3>
-			Rating: <span>{{ location.rating }}</span>
-			Address: <h5>{{ location.address }}</h5>
+			<span rating-stars rating="location.rating"></span>
+			<h5>Address: {{ location.address }}</h5>
 			<span ng-repeat="facility in location.facilities"> {{ facility }}</span>
 		</li> <hr />
 	</ul>
