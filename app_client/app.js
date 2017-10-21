@@ -2,7 +2,7 @@
 
 ;(function(){
 
-	angular.module('cafespot', ['ngRoute'])
+	angular.module('cafespot', ['ngRoute', 'ngSanitize'])
 
 	function config($routeProvider, $locationProvider){
 		$routeProvider
@@ -14,6 +14,11 @@
 			.when('/about', {
 				templateUrl: '/common/views/genericText.view.html',
 				controller: 'aboutCtrl',
+				controllerAs: 'vm'
+			})
+			.when('/location/:locationid', {
+				templateUrl: 'locationDetail/locationDetail.view.html',
+				controller: 'locationDetailCtrl',
 				controllerAs: 'vm'
 			})
 			.otherwise({ redirectTo: '/' })

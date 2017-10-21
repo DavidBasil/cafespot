@@ -14,7 +14,7 @@
 				<div class="uk-alert uk-alert-success">{{ vm.message }}</div>
 				<ul class="uk-list uk-list-line">
 					<li ng-repeat="location in vm.data.locations | filter: textFilter">
-						<h4><a href="/location/{{ locationd._id }}">{{ location.title }}</a>
+						<h4><a href="/location/{{ location._id }}">{{ location.title }}</a>
 							<small rating-stars rating="location.rating"></small>
 						</h4>
 						<p>{{ location.address }}</p>

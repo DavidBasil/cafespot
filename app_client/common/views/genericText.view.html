@@ -5,7 +5,7 @@
 	<page-header content="vm.pageHeader"></page-header>	
 	<div class="uk-grid">
 		<div class="uk-width-1-2">
-			<p>{{ vm.main.content | addHtmlLineBreaks }}</p>	
+			<p ng-bind-html="vm.main.content | addHtmlLineBreaks"></p>	
 		</div>	
 	</div>
 	<footer-generic>
