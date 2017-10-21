@@ -1,23 +1,29 @@
-<div id="banner" class="uk-heading">
-	<div class="uk-grid">
-		<div class="uk-width-1-2">
-			<h2>{{ vm.pageHeader.title }} <small>{{ vm.pageHeader.strapline }}</small></h2>	
-		</div>	<!-- /uk-width -->
-	</div>	<!-- /uk-grid -->	
-	<div class="uk-grid">
-		<div class="uk-width-1-2">
-			<label for="filter">Filter results</label>	
-			<input type="text" id="filter" name="filter" ng-model="textFilter" />
-			<div class="uk-alert uk-alert-danger">{{ vm.message }}</div>
-			<ul class="uk-list uk-list-line">
-				<li ng-repeat="location in vm.data.locations | filter: textFilter">
-					<h4><a href="/location/{{ locationd._id }}">{{ location.title }}</a>
-						<small rating-stars rating="location.rating"></small>
-					</h4>
-					<p>{{ location.address }}</p>
-					<p><span class="uk-badge" ng-repeat="facility in location.facilities">{{ facility }}</span></p>
-				</li>
-			</ul>
-		</div> 	<!-- /uk-width -->	
-	</div> <!-- /uk-grid -->
-</div> <!-- /uk-heading -->
+<navigation></navigation>
+
+<div class="uk-container">
+	<page-header content="vm.pageHeader"></page-header>
+	<div id="banner" class="uk-heading">
+		<div class="uk-grid">
+			<div class="uk-width-1-2">
+			</div>	<!-- /uk-width -->
+		</div>	<!-- /uk-grid -->	
+		<div class="uk-grid">
+			<div class="uk-width-1-2">
+				<label for="filter">Filter results</label>	
+				<input type="text" id="filter" name="filter" ng-model="textFilter" />
+				<div class="uk-alert uk-alert-success">{{ vm.message }}</div>
+				<ul class="uk-list uk-list-line">
+					<li ng-repeat="location in vm.data.locations | filter: textFilter">
+						<h4><a href="/location/{{ locationd._id }}">{{ location.title }}</a>
+							<small rating-stars rating="location.rating"></small>
+						</h4>
+						<p>{{ location.address }}</p>
+						<p><span class="uk-badge" ng-repeat="facility in location.facilities">{{ facility }}</span></p>
+					</li>
+				</ul>
+			</div> 	<!-- /uk-width -->	
+		</div> <!-- /uk-grid -->
+	</div> <!-- /uk-heading -->
+	<footer-generic>
+	</footer-generic>
+</div>
