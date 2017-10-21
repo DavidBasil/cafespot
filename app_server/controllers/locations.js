@@ -73,7 +73,8 @@ var renderReviewForm = function(req, res, location){
 	res.render('location-review-form', {
 		title: 'Review ' + location.title + ' on Cafespot',
 		pageHeader: {title: 'Review ' + location.title},
-		error: req.query.err
+		error: req.query.err,
+		url: req.originalUrl
 	})
 }
 
