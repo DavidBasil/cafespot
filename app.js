@@ -1,8 +1,10 @@
+require('dotenv').load()
 var express = require('express')
 var path = require('path')
 var logger = require('morgan')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
+var passport = require('passport')
 require('./app_api/models/db')
 // var routes = require('./app_server/routes/index')
 var routesApi = require('./app_api/routes/index')
@@ -10,6 +12,8 @@ var uglifyJs = require('uglify-js2')
 var fs = require('fs')
 
 var app = express()
+
+require('./app_api/config/passport')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'app_server', 'views'))
@@ -46,6 +50,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.static(path.join(__dirname, 'app_client')))
+app.use(passport.initialize())
 
 // app.use('/', routes)
 app.use('/api', routesApi)

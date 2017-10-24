@@ -2,6 +2,7 @@ var express = require('express')
 var router = express.Router()
 var ctrlLocations = require('../controllers/locations')
 var ctrlReviews = require('../controllers/reviews')
+var ctrlAuth = require('../controllers/authentication')
 
 // LOCATIONS
 // get a list of locations
@@ -24,5 +25,9 @@ router.post('/locations/:locationid/reviews/', ctrlReviews.reviewsCreateOne)
 router.put('/locations/:locationid/reviews/:reviewid', ctrlReviews.reviewsUpdateOne)
 // delete a review
 router.delete('/locations/:locationid/reviews/:reviewid', ctrlReviews.reviewsDeleteOne)
+
+// AUTHENTICATION
+router.post('/register', ctrlAuth.register)
+router.post('/login', ctrlAuth.login)
 
 module.exports = router

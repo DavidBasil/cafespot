@@ -36,5 +36,7 @@ userSchema.methods.generateJwt = function(){
 		email: this.email,
 		name: this.name,
 		exp: pareseInt(expiry.getTime() / 1000),
-	}, 'thisIsSecret')
+	}, process.env.JWT_SECRET)
 }
+
+mongoose.model('User', userSchema)
