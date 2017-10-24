@@ -38,3 +38,4 @@ process.on('SIGINT', function(){
 })
 
 require('./locations')
+require('./users')
