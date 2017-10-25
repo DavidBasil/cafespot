@@ -38,6 +38,7 @@ module.exports.login = function(req, res){
 		if (err){
 			res.status(404)
 			res.json(err)
+			return
 		}
 		if (user){
 			token = user.generateJwt()
@@ -47,6 +48,6 @@ module.exports.login = function(req, res){
 			res.status(401)
 			res.json(info)
 		}
-	})
+	})(req, res)
 }
 

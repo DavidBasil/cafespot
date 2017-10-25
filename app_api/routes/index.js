@@ -1,5 +1,10 @@
 var express = require('express')
 var router = express.Router()
+var jwt = require('express-jwt')
+var auth = jwt({
+	secret: process.env.JWT_SECRET,
+	userProperty: 'payload'
+})
 var ctrlLocations = require('../controllers/locations')
 var ctrlReviews = require('../controllers/reviews')
 var ctrlAuth = require('../controllers/authentication')
@@ -20,11 +25,11 @@ router.delete('/locations/:locationid', ctrlLocations.locationsDeleteOne)
 // get a single review
 router.get('/locations/:locationid/reviews/:reviewid', ctrlReviews.reviewsReadOne)
 // // create a new review
-router.post('/locations/:locationid/reviews/', ctrlReviews.reviewsCreateOne)
+router.post('/locations/:locationid/reviews/', auth, ctrlReviews.reviewsCreateOne)
  // update a review
-router.put('/locations/:locationid/reviews/:reviewid', ctrlReviews.reviewsUpdateOne)
+router.put('/locations/:locationid/reviews/:reviewid', auth, ctrlReviews.reviewsUpdateOne)
 // delete a review
-router.delete('/locations/:locationid/reviews/:reviewid', ctrlReviews.reviewsDeleteOne)
+router.delete('/locations/:locationid/reviews/:reviewid', auth, ctrlReviews.reviewsDeleteOne)
 
 // AUTHENTICATION
 router.post('/register', ctrlAuth.register)

@@ -67,6 +67,14 @@ app.use(function(req, res, next) {
   next(err)
 })
 
+// unauthorized errors
+app.use(function(err, res, res, next){
+	if (err.name === 'UnauthorizedError'){
+		res.status(404)
+		res.json({"message": err.name + ": " + err.message})
+	}
+})
+
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
