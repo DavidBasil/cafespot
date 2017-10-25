@@ -18,12 +18,12 @@ var userSchema = new mongoose.Schema({
 
 // methods
 userSchema.methods.setPassword = function(password){
-	this.salt = crypto.randomBytes(16).toSring('hex')
-	this.hash = crypto.pbkdf2sync(password, this.salt, 1000, 64).toString('hex')
+	this.salt = crypto.randomBytes(16).toString('hex')
+	this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha').toString('hex')
 }
 
 userSchema.methods.validPassword = function(password){
-	var hash = crypto.pbkdf2sync(password, this.salt, 1000, 64).toString('hex')
+	var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha').toString('hex')
 	return this.hash === hash
 }
 
@@ -35,7 +35,7 @@ userSchema.methods.generateJwt = function(){
 		_id: this._id,
 		email: this.email,
 		name: this.name,
-		exp: pareseInt(expiry.getTime() / 1000),
+		exp: parseInt(expiry.getTime() / 1000),
 	}, process.env.JWT_SECRET)
 }
 
