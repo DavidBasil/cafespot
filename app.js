@@ -11,9 +11,7 @@ var uglifyJs = require('uglify-js2')
 var fs = require('fs')
 var passport = require('passport')
 
-
 require('./app_api/config/passport')
-
 
 var app = express()
 // view engine setup
@@ -27,6 +25,7 @@ var appClientFiles = [
 	'app_client/about/about.controller.js',
 	'app_client/locationDetail/locationDetail.controller.js',
 	'app_client/common/services/cafespotData.service.js',
+	'app_client/common/services/authentication.service.js',
 	'app_client/common/filters/addHtmlLineBreaks.filter.js',
 	'app_client/common/directives/ratingStars/ratingStars.directive.js',
 	'app_client/common/directives/footerGeneric/footerGeneric.directive.js',

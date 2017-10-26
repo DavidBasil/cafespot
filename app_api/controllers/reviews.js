@@ -45,27 +45,57 @@ module.exports.reviewsReadOne = function(req, res){
 
 // create a review
 module.exports.reviewsCreateOne = function(req, res){
-	var locationid = req.params.locationid
-	if (locationid){
-		Location.findById(locationid).select('reviews').exec(function(err, location){
-			if (err){
-				res.status(400)
+	getAuthor(req, res, function(req, res, userName){
+		var locationid = req.params.locationid
+		if (locationid){
+			Location.findById(locationid).select('reviews').exec(function(err, location){
+				if (err){
+					res.status(400)
+					res.json(err)
+				} else {
+					doAddReview(req, res, location)
+				}
+			})
+		} else {
+			res.status(404)
+			res.json({"message": "Not found, locationid required"})
+		}
+	})
+}
+
+// get author
+var getAuthor = function(req, res, callback){
+	if (req.payload && req.payload.email){
+		User.findOne({email: req.payload.email}).exec(function(err, user){
+			if (!user){
+				res.status(404)
+				res.json({"message": "User not found"})
+				return
+			} else  if (err){
+				console.log(err)
+				res.status(404)
 				res.json(err)
-			} else {
-				doAddReview(req, res, location)
+				return
 			}
+			callback(req, res, user.name)
 		})
+	} else {
+		res.status(404)
+		res.json({"message": "User not found"})
+		return
 	}
 }
+
+
 // todo: review
 // doAddReview
-var doAddReview = function(req, res, location){
+var doAddReview = function(req, res, location, author){
 	if (!location){
 		res.status(404)
 		res.json({"message": "locationid not found"})
 	} else {
 		location.reviews.push({
-			author: req.body.author,
+			author: author,
 			rating: req.body.rating,
 			reviewText: req.body.reviewText
 		})
