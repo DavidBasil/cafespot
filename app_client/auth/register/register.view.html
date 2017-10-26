@@ -4,7 +4,7 @@
 	<page-header content="vm.pageHeader"></page-header>
 	<div class="uk-grid">
 		<div class="uk-width-1-2">
-			<p>Already a member? Please <a href="/login">log in</a> instead.</p>	
+			<p>Already a member? Please <a href="/login?page={{ vm.returnPage }}">log in</a> instead.</p>	
 			<form ng-submit="vm.onSubmit()" class="uk-form">
 				<div class="uk-alert uk-alert-danger">{{ vm.formError }}</div>	
 				<div class="uk-form-row">

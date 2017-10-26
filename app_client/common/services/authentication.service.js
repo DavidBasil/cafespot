@@ -4,8 +4,8 @@
 		.module('cafespot')
 		.service('authentication', authentication)
 
-	authentication.$inject = ['$window']
-	function authentication($window){
+	authentication.$inject = ['$http','$window']
+	function authentication($http, $window){
 		var saveToken = function(token){
 			$window.localStorage['cafespot-token'] = token
 		}
@@ -31,9 +31,27 @@
 				}
 			}
 		}
+		var register = function(user){
+			return $http.post('/api/register', user).then(function(data){
+				saveToken(data.token)
+			})
+		}
+		var login = function(user){
+			return $http.post('/api/login', user).then(function(data){
+				saveToken(data.token)
+			})
+		}
+		var logout = function(){
+			$window.localStorage.removeItem('cafespot-token')
+		}
 		return {
 			saveToken: saveToken,
-			getToken: getToken
+			getToken: getToken,
+			currentUser: currentUser,
+			isLoggedIn: isLoggedIn,
+			register: register,
+			login: login,
+			logout: logout
 		}
 	}
 
